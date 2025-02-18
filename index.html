@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>دليل الفحوصات والاختبارات للمشاريع الإنشائية - النظام المتكامل</title>
+  <!-- استيراد أيقونات Font Awesome وخطوط Google -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- استيراد Chart.js و jsPDF -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    :root {
+      --primary-color: #8B4513;
+      --golden-color: #FFD700;
+      --secondary-color: #A0522D;
+      --accent-color: #D2691E;
+      --light-bg: #f4f4f4;
+      --container-bg: #fff;
+      --text-color: #333;
+      --header-bg: #8B4513;
+      --footer-bg: #333;
+      --footer-text: #fff;
+      --shadow-color: rgba(0, 0, 0, 0.15);
+    }
+    body {
+      font-family: 'Cairo', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--light-bg);
+      color: var(--text-color);
+      line-height: 1.8;
+      direction: rtl;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    body.dark-mode {
+      background-color: #222;
+      color: #ddd;
+    }
+    body.dark-mode a { color: #ddd; }
+    header {
+      background-color: var(--header-bg);
+      color: #fff;
+      padding: 20px 10px;
+      text-align: center;
+      box-shadow: 0 2px 5px var(--shadow-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    /* تم حذف شعار النظام */
+    header h2 {
+      margin: 5px 0 15px;
+      font-size: 2.5rem;
+      text-shadow: 1px 1px 2px #000;
+    }
+    header h2 .golden-title {
+      color: var(--golden-color);
+    }
+    /* زر تبديل الوضع الداكن */
+    #darkModeToggle {
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      padding: 8px 12px;
+      background-color: var(--accent-color);
+      border: none;
+      border-radius: 4px;
+      color: #fff;
+      cursor: pointer;
+    }
+    .tab-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+    .tab-link {
+      padding: 12px 22px;
+      border: 2px solid var(--secondary-color);
+      border-radius: 8px;
+      background-color: var(--container-bg);
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s, color 0.3s, box-shadow 0.3s;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary-color);
+      flex: 1 1 9%;
+      text-align: center;
+      justify-content: center;
+      box-shadow: 0 2px 5px var(--shadow-color);
+    }
+    .tab-link:hover, .tab-link.active {
+      background-color: var(--secondary-color);
+      color: #fff;
+      transform: scale(1.05);
+      box-shadow: 0 3px 8px var(--shadow-color);
+    }
+    main {
+      margin: 20px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: var(--container-bg);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 30px var(--shadow-color);
+    }
+    section {
+      display: none;
+      margin-top: 40px;
+      animation: fadeIn 0.5s ease-in;
+    }
+    section.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    h1, h2, h3, h4 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--primary-color);
+    }
+    p {
+      text-align: justify;
+      margin-bottom: 20px;
+      font-size: 1rem;
+    }
+    .test-card {
+      border: 1px solid var(--secondary-color);
+      border-radius: 8px;
+      padding: 25px;
+      margin-bottom: 35px;
+      background-color: #fafafa;
+      box-shadow: 0 3px 10px var(--shadow-color);
+    }
+    .test-card h3 {
+      margin-top: 0;
+      font-size: 1.4rem;
+      color: var(--accent-color);
+    }
+    .test-details p {
+      margin: 12px 0;
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+    .test-details span {
+      font-weight: bold;
+      color: var(--secondary-color);
+    }
+    .test-action {
+      border-top: 1px dashed var(--secondary-color);
+      padding-top: 15px;
+      margin-top: 20px;
+    }
+    .test-action h4 {
+      font-size: 1.1rem;
+      color: var(--accent-color);
+      margin-bottom: 10px;
+    }
+    .test-action ol {
+      margin: 0 0 10px;
+      padding-right: 20px;
+    }
+    .test-action p {
+      font-size: 0.95rem;
+      color: var(--text-color);
+    }
+    .detailed-test-steps {
+      background-color: #eef;
+      border: 1px solid var(--secondary-color);
+      padding: 15px;
+      margin-top: 10px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+    .test-calc-btn {
+      padding: 8px 16px;
+      background-color: var(--secondary-color);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .test-calc {
+      margin-top: 15px;
+      padding: 15px;
+      border: 1px solid var(--secondary-color);
+      border-radius: 5px;
+      background-color: #fcfcfc;
+      display: none;
+    }
+    .calc-instructions {
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+      background-color: #f0f8ff;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px dashed var(--secondary-color);
+    }
+    .calc-form .calc-step {
+      margin-bottom: 15px;
+    }
+    .calc-form label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .calc-form input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid var(--secondary-color);
+      border-radius: 4px;
+    }
+    .calc-submit-btn {
+      padding: 8px 16px;
+      background-color: var(--accent-color);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .calc-result {
+      margin-top: 20px;
+      border-top: 1px solid var(--secondary-color);
+      padding-top: 15px;
+      display: none;
+    }
+    .result-text {
+      font-size: 1rem;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+    .chart-container {
+      width: 100%;
+      max-width: 800px;
+      margin: 20px auto;
+      border: 1px solid var(--secondary-color);
+      padding: 10px;
+      border-radius: 8px;
+      background-color: #fff;
+    }
+    .chart-description {
+      text-align: center;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      color: var(--secondary-color);
+    }
+    #faqSearch {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--secondary-color);
+      border-radius: 4px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--text-color);
+      padding: 15px 0;
+    }
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+    .faq-item h4 {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+      color: var(--primary-color);
+    }
+    .resources ul {
+      list-style: none;
+      padding: 0;
+    }
+    .resources ul li {
+      padding: 10px;
+      border-bottom: 1px solid var(--text-color);
+    }
+    .resources ul li a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .resources ul li a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      background-color: var(--footer-bg);
+      color: var(--footer-text);
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+    }
+    footer .social {
+      margin-top: 10px;
+    }
+    footer .social a {
+      color: var(--footer-text);
+      margin: 0 5px;
+      font-size: 1.2rem;
+      text-decoration: none;
+    }
+    #backToTop {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 10px 15px;
+      background-color: var(--accent-color);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      display: none;
+      z-index: 100;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button id="darkModeToggle">الوضع الداكن</button>
+    <h2><span class="golden-title">دليل الفحوصات والاختبارات للمشاريع الإنشائية</span></h2>
+    <nav class="tab-container">
+      <div class="tab-link active" data-target="introduction"><i class="fas fa-info-circle"></i> المقدمة</div>
+      <div class="tab-link" data-target="phase1"><i class="fas fa-search"></i> المرحلة 1</div>
+      <div class="tab-link" data-target="phase2"><i class="fas fa-layer-group"></i> المرحلة 2</div>
+      <div class="tab-link" data-target="phase3"><i class="fas fa-hard-hat"></i> المرحلة 3</div>
+      <div class="tab-link" data-target="phase4"><i class="fas fa-paint-roller"></i> المرحلة 4</div>
+      <div class="tab-link" data-target="phase5"><i class="fas fa-clipboard-check"></i> المرحلة 5</div>
+      <div class="tab-link" data-target="phase6"><i class="fas fa-plus-circle"></i> المرحلة 6</div>
+      <div class="tab-link" data-target="examples"><i class="fas fa-chart-bar"></i> الأمثلة</div>
+      <div class="tab-link" data-target="faq"><i class="fas fa-question-circle"></i> الأسئلة</div>
+      <div class="tab-link" data-target="resources"><i class="fas fa-book"></i> الموارد</div>
+      <div class="tab-link" data-target="conclusion"><i class="fas fa-lightbulb"></i> الخاتمة</div>
+    </nav>
+  </header>
+  <main>
+    <div class="container">
+      <section id="introduction" class="active">
+        <h1>المقدمة</h1>
+        <p>
+          يقدم هذا الدليل منهجية شاملة لفحص واختبار كافة جوانب المشاريع الإنشائية باستخدام أحدث المعايير الدولية والتقنيات الرقمية. يهدف إلى تحسين الأداء وضمان السلامة من خلال تقارير مفصلة وتوصيات فنية دقيقة.
+        </p>
+        <div class="new-details">
+          <h3>أهمية الدليل وفوائده</h3>
+          <p>
+            يُساعد الدليل في تقليل المخاطر وتحسين جودة التنفيذ كما يُعد أداة تدريبية للمهندسين والمقاولين لتعزيز المعرفة بأفضل الممارسات العالمية.
+          </p>
+        </div>
+      </section>
+      <section id="phase1">
+        <h1>المرحلة 1: التحريات والفحوصات الميدانية</h1>
+        <h2>دراسة خصائص التربة والبيئة</h2>
+        <div class="test-card">
+          <h3><i class="fas fa-mountain"></i> اختبار التربة (Soil Testing)</h3>
+          <div class="test-details">
+            <p><span>التعريف:</span> تحليل التربة لتحديد مكوناتها الكيميائية والفيزيائية (رمل، طين، حصى ورطوبة).</p>
+            <p><span>الهدف:</span> تحديد قدرة التربة على دعم الأحمال واختيار نوع الأساسات المناسب.</p>
+            <p><span>التفاصيل:</span> استخدام أجهزة التحليل الطيفي ونظم قياس الحموضة مع أخذ عينات من أعماق مختلفة.</p>
+            <p><span>الفترة:</span> 1-2 يوم لجمع العينات و3-5 أيام للتحليل المختبري.</p>
+            <p><span>الظروف:</span> جمع العينات في الصباح مع توثيق المواقع بواسطة GPS.</p>
+            <p><span>المسببات:</span> نسب غير متوازنة تؤدي إلى ضعف الأساسات وزيادة مخاطر الهبوط والتشقق.</p>
+            <p><span>قراءة النتائج:</span> مقارنة النسب مع معايير ASTM D422 وBS 1377.</p>
+          </div>
+          <div class="test-action">
+            <h4>خطوات إجراء اختبار التربة وفق المعايير الدولية</h4>
+            <ol>
+              <li>أخذ عينات من عدة نقاط باستخدام معدات معقمة.</li>
+              <li>تحديد المواقع بواسطة GPS وتخزين العينات في حاويات معزولة.</li>
+              <li>إرسال العينات لمختبر معتمد لإجراء التحاليل.</li>
+              <li>مقارنة النتائج مع المعايير الدولية.</li>
+            </ol>
+            <p>سيناريو توضيحي: أظهرت العينات من 3 مواقع نسب 45% رمل، 30% طين، 25% حصى مما يدل على تربة مناسبة للأساسات.</p>
+          </div>
+          <div class="detailed-test-steps">
+            <p>توصيات: استخدام أجهزة معايرة وتكرار الفحص لضمان دقة النتائج.</p>
+          </div>
+          <div class="test-calc">
+            <p class="calc-instructions">أدخل رقم العينة ونسب الرمل والطين والحصى (يجب أن يكون المجموع 100%) ثم اضغط على "احسب النتيجة".</p>
+            <form class="calc-form" data-test="soil">
+              <div class="calc-step">
+                <label>رقم العينة:</label>
+                <input type="number" name="sampleNumber" placeholder="1">
+              </div>
+              <div class="calc-step">
+                <label>نسبة الرمل (%):</label>
+                <input type="number" name="sand" placeholder="45">
+              </div>
+              <div class="calc-step">
+                <label>نسبة الطين (%):</label>
+                <input type="number" name="clay" placeholder="30">
+              </div>
+              <div class="calc-step">
+                <label>نسبة الحصى (%):</label>
+                <input type="number" name="gravel" placeholder="25">
+              </div>
+              <div class="calc-step">
+                <button type="button" class="calc-submit-btn">احسب النتيجة</button>
+              </div>
+            </form>
+            <div class="calc-result">
+              <h4>النتيجة:</h4>
+              <p class="result-text"></p>
+              <canvas class="result-chart"></canvas>
+              <p class="result-recommendation"></p>
+            </div>
+          </div>
+          <button class="test-calc-btn">إجراء الإختبار</button>
+        </div>
+        <div class="test-card">
+          <h3><i class="fas fa-tint"></i> اختبار المياه الجوفية (Groundwater Testing)</h3>
+          <div class="test-details">
+            <p><span>التعريف:</span> تحليل المياه الجوفية لتحديد عمق المياه وتركيبتها الكيميائية.</p>
+            <p><span>الهدف:</span> تقييم تأثير المياه على استقرار الأساسات وتحديد الحاجة للعزل المائي.</p>
+            <p><span>التفاصيل:</span> قياس عمق المياه ونسبة المعادن الثقيلة وفق معايير WHO وEPA.</p>
+            <p><span>الفترة:</span> 2-3 أيام لجمع العينات و2-4 أيام للتحليل.</p>
+            <p><span>الظروف:</span> إجراء الاختبار في بيئة معزولة عن التلوث الخارجي.</p>
+            <p><span>المسببات:</span> المياه الملوثة تؤدي إلى تآكل الأساسات.</p>
+            <p><span>قراءة النتائج:</span> مقارنة النتائج مع معايير WHO وEPA.</p>
+          </div>
+          <div class="test-action">
+            <h4>خطوات إجراء اختبار المياه الجوفية وفق المعايير الدولية</h4>
+            <ol>
+              <li>حفر بئر اختبار في نقاط استراتيجية.</li>
+              <li>قياس عمق المياه باستخدام أجهزة متقدمة.</li>
+              <li>جمع العينات وتحليلها في مختبر معتمد.</li>
+              <li>مقارنة النتائج مع المعايير الدولية.</li>
+            </ol>
+            <p>سيناريو توضيحي: سجلت العينات عمق 15 متر ونسب منخفضة من المعادن الثقيلة مما يدل على مياه جيدة للأساسات.</p>
+          </div>
+          <div class="detailed-test-steps">
+            <p>توصيات: استخدام أجهزة استشعار معتمدة وجمع العينات في فترات متعددة.</p>
+          </div>
+          <div class="test-calc">
+            <p class="calc-instructions">أدخل رقم العينة، عمق المياه (بالمتر) ونسبة المعادن الثقيلة (%) ثم اضغط على "احسب النتيجة".</p>
+            <form class="calc-form" data-test="groundwater">
+              <div class="calc-step">
+                <label>رقم العينة:</label>
+                <input type="number" name="sampleNumber" placeholder="2">
+              </div>
+              <div class="calc-step">
+                <label>عمق المياه (متر):</label>
+                <input type="number" name="waterLevel" placeholder="15">
+              </div>
+              <div class="calc-step">
+                <label>نسبة المعادن الثقيلة (%):</label>
+                <input type="number" name="heavyMetals" placeholder="5">
+              </div>
+              <div class="calc-step">
+                <button type="button" class="calc-submit-btn">احسب النتيجة</button>
+              </div>
+            </form>
+            <div class="calc-result">
+              <h4>النتيجة:</h4>
+              <p class="result-text"></p>
+              <canvas class="result-chart"></canvas>
+              <p class="result-recommendation"></p>
+            </div>
+          </div>
+          <button class="test-calc-btn">إجراء الإختبار</button>
+        </div>
+      </section>
+      <section id="phase2">
+        <h1>المرحلة 2: اختبارات الأساسات والبنية التحتية – شرح تقني متعمق</h1>
+        <h2>فحص الخرسانة وتصميم الأساسات</h2>
+        <div class="test-card">
+          <h3><i class="fas fa-cubes"></i> اختبار مقاومة الخرسانة (Concrete Compressive Strength Test)</h3>
+          <div class="test-details">
+            <p><span>التعريف:</span> قياس قوة تحمل الخرسانة تحت الضغط باستخدام عينات مصبوبة وفق معايير ACI 318 وBS EN 206.</p>
+            <p><span>الهدف:</span> التأكد من مطابقة الخرسانة لمتطلبات التصميم لضمان استقرار الأساسات.</p>
+            <p><span>التفاصيل:</span> استخدام أجهزة قياس رقمية لتحليل منحنى الضغط وتحديد نقاط الذروة والانحدار.</p>
+            <p><span>الفترة:</span> 1-2 يوم لإعداد العينات، 28 يومًا للمعالجة، ثم الاختبار في يوم واحد.</p>
+            <p><span>الظروف:</span> المعالجة تحت ظروف مختبرية محكمة (درجة حرارة ورطوبة محددة).</p>
+            <p><span>المسببات:</span> ضعف المعالجة يؤدي إلى انخفاض القوة.</p>
+            <p><span>قراءة النتائج:</span> مقارنة النتائج مع معايير ASTM D422 وBS 1377.</p>
+          </div>
+          <div class="test-action">
+            <h4>خطوات إجراء اختبار الخرسانة وفق المعايير الدولية</h4>
+            <ol>
+              <li>صب العينات في قوالب معتمدة وفق المواصفات القياسية.</li>
+              <li>تنفيذ المعالجة لمدة 28 يومًا تحت ظروف مختبرية محددة.</li>
+              <li>قياس قوة الضغط باستخدام جهاز رقمي وتحليل منحنى الضغط.</li>
+              <li>مقارنة النتائج مع معايير ACI وBS EN 206.</li>
+            </ol>
+            <p>سيناريو توضيحي: بلغت قوة الضغط 32 ميجا باسكال بعد معالجة 28 يومًا مما يدل على مطابقة الخرسانة للمعايير.</p>
+          </div>
+          <div class="detailed-test-steps">
+            <p>توصيات: استخدام قوالب ومعالجات معتمدة وتوثيق كل مرحلة للتحليل الدقيق.</p>
+          </div>
+          <div class="test-calc">
+            <p class="calc-instructions">أدخل رقم العينة وقيمة الضغط (ميجا باسكال) ثم اضغط على "احسب النتيجة".</p>
+            <form class="calc-form" data-test="concrete">
+              <div class="calc-step">
+                <label>رقم العينة:</label>
+                <input type="number" name="sampleNumber" placeholder="3">
+              </div>
+              <div class="calc-step">
+                <label>قيمة الضغط (ميجا باسكال):</label>
+                <input type="number" name="compressiveStrength" placeholder="32">
+              </div>
+              <div class="calc-step">
+                <button type="button" class="calc-submit-btn">احسب النتيجة</button>
+              </div>
+            </form>
+            <div class="calc-result">
+              <h4>النتيجة:</h4>
+              <p class="result-text"></p>
+              <canvas class="result-chart"></canvas>
+              <p class="result-recommendation"></p>
+            </div>
+          </div>
+          <button class="test-calc-btn">إجراء الإختبار</button>
+        </div>
+        <div class="test-card">
+          <h3><i class="fas fa-hard-hat"></i> اختبار ضغط التربة (Soil Compaction Test)</h3>
+          <div class="test-details">
+            <p><span>التعريف:</span> قياس كثافة التربة بعد الدك باستخدام جهاز Proctor وفق معايير ASTM D1557 وBS 1377.</p>
+            <p><span>الهدف:</span> التأكد من تحقيق التربة للكثافة المثالية (95% من الكثافة النظرية).</p>
+            <p><span>التفاصيل:</span> استخدام نظام استشعار رقمي لتحليل الرطوبة والضغط مع نماذج إحصائية دقيقة.</p>
+            <p><span>الفترة:</span> 1-2 أيام للموقع و2 أيام للتحليل المختبري.</p>
+            <p><span>الظروف:</span> إجراء الاختبار في ظروف مستقرة مع توثيق الموقع بواسطة GPS.</p>
+            <p><span>المسببات:</span> انخفاض الكثافة يؤدي إلى ضعف الأساسات.</p>
+            <p><span>قراءة النتائج:</span> مقارنة النتائج مع معايير ASTM وBS 1377.</p>
+          </div>
+          <div class="test-action">
+            <h4>خطوات إجراء اختبار ضغط التربة وفق المعايير الدولية</h4>
+            <ol>
+              <li>قياس التربة باستخدام جهاز Proctor وفق الإجراءات القياسية.</li>
+              <li>تسجيل بيانات الرطوبة والضغط باستخدام أجهزة استشعار دقيقة.</li>
+              <li>تحليل البيانات باستخدام نماذج إحصائية متقدمة.</li>
+              <li>مقارنة النتائج مع المعايير الدولية.</li>
+            </ol>
+            <p>سيناريو توضيحي: سجل الاختبار نسبة كثافة 95% مما يدل على جاهزية التربة كأساس متين.</p>
+          </div>
+          <div class="detailed-test-steps">
+            <p>توصيات: استخدام معدات معتمدة وإجراء القياسات في ظروف مستقرة للحصول على نتائج دقيقة.</p>
+          </div>
+          <div class="test-calc">
+            <p class="calc-instructions">أدخل رقم العينة ونسبة الكثافة (%) ثم اضغط على "احسب النتيجة".</p>
+            <form class="calc-form" data-test="compaction">
+              <div class="calc-step">
+                <label>رقم العينة:</label>
+                <input type="number" name="sampleNumber" placeholder="4">
+              </div>
+              <div class="calc-step">
+                <label>نسبة الكثافة (%):</label>
+                <input type="number" name="compaction" placeholder="95">
+              </div>
+              <div class="calc-step">
+                <button type="button" class="calc-submit-btn">احسب النتيجة</button>
+              </div>
+            </form>
+            <div class="calc-result">
+              <h4>النتيجة:</h4>
+              <p class="result-text"></p>
+              <canvas class="result-chart"></canvas>
+              <p class="result-recommendation"></p>
+            </div>
+          </div>
+          <button class="test-calc-btn">إجراء الإختبار</button>
+        </div>
+      </section>
+      <section id="phase3">
+        <h1>المرحلة 3: الاختبارات الهيكلية والإنشائية – تحليل متعمق للمواد والهياكل</h1>
+        <h2>تقييم جودة المواد والتصميم الهيكلي</h2>
+        <div class="test-card">
+          <h3><i class="fas fa-arrows-alt-h"></i> اختبار الحديد (Steel Tensile Test)</h3>
+          <div class="test-details">
+            <p><span>التعريف:</span> قياس قدرة حديد التسليح على تحمل الشد وفق معايير ASTM A370 وISO 6892.</p>
+            <p><span>الهدف:</span> التأكد من أن خصائص الحديد تفي بمتطلبات التصميم لضمان سلامة الهيكل.</p>
+            <p><span>التفاصيل:</span> تحليل منحنى الإجهاد وتسجيل نقاط الذروة لتقييم الجودة.</p>
+            <p><span>الفترة:</span> 3-4 أيام تشمل جمع العينات والاختبار والتحليل.</p>
+            <p><span>الظروف:</span> إجراء الاختبار في بيئة مخبرية متحكم بها.</p>
+            <p><span>المسببات:</span> انخفاض مقاومة الشد قد يؤدي إلى فشل هيكلي خطير.</p>
+            <p><span>قراءة النتائج:</span> مقارنة النتائج مع معايير ASTM وISO.</p>
+          </div>
+          <div class="test-action">
+            <h4>خطوات إجراء اختبار الحديد وفق المعايير الدولية</h4>
+            <ol>
+              <li>جمع عينات من حديد التسليح من مواقع مختلفة.</li>
+              <li>تخزين العينات في ظروف مناسبة.</li>
+              <li>إجراء اختبار الشد باستخدام جهاز رقمي وتسجيل منحنى الإجهاد.</li>
+              <li>مقارنة النتائج مع المعايير الدولية.</li>
+            </ol>
+            <p>سيناريو توضيحي: سجل الاختبار مقاومة شدة تبلغ 550 ميجا باسكال مما يشير إلى جودة عالية للحديد.</p>
+          </div>
+          <div class="detailed-test-steps">
+            <p>توصيات: توثيق كافة القياسات والتأكد من معايرة الأجهزة بدقة.</p>
+          </div>
+          <div class="test-calc">
+            <p class="calc-instructions">أدخل رقم العينة وقيمة مقاومة الشد (ميجا باسكال) ثم اضغط على "احسب النتيجة".</p>
+            <form class="calc-form" data-test="steel">
+              <div class="calc-step">
+                <label>رقم العينة:</label>
+                <input type="number" name="sampleNumber" placeholder="5">
+              </div>
+              <div class="calc-step">
+                <label>قيمة الشد (ميجا باسكال):</label>
+                <input type="number" name="tensileStrength" placeholder="550">
+              </div>
+              <div class="calc-step">
+                <button type="button" class="calc-submit-btn">احسب النتيجة</button>
+              </div>
+            </form>
+            <div class="calc-result">
+              <h4>النتيجة:</h4>
+              <p class="result-text"></p>
+              <canvas class="result-chart"></canvas>
+              <p class="result-recommendation"></p>
+            </div>
+          </div>
+          <button class="test-calc-btn">إجراء الإختبار</button>
+        </div>
+        <div class="test-card">
+          <h3><i class="fas fa-wrench"></i> اختبار اللحامات (Weld Quality Test)</h3>
+          <div class="test-details">
+            <p><span>التعريف:</span> تقييم جودة اللحامات باستخدام تقنيات غير تدميرية وفق معايير AWS D1.1 وEN ISO 5817.</p>
+            <p><span>الهدف:</span> التأكد من سلامة وصلات اللحام ومنع العيوب التي قد تؤثر على الهيكل.</p>
+            <p><span>التفاصيل:</span> تحليل توزيع الإجهاد حول نقاط اللحام وتحديد نسبة العيوب.</p>
+            <p><span>الفترة:</span> يوم إلى يومين للاختبار وتقرير تحليلي خلال 2-3 أيام.</p>
+            <p><span>الظروف:</span> إجراء الاختبار في بيئة مخبرية نظيفة.</p>
+            <p><span>المسببات:</span> ارتفاع نسبة العيوب تؤدي إلى ضعف الروابط الهيكلية.</p>
+            <p><span>قراءة النتائج:</span> مقارنة النتائج مع معايير AWS وEN ISO.</p>
+          </div>
+          <div class="test-action">
+            <h4>خطوات إجراء اختبار اللحامات وفق المعايير الدولية</h4>
+            <ol>
+              <li>تنظيف وتحضير مناطق اللحام.</li>
+              <li>استخدام تقنيات الأشعة السينية أو الموجات فوق الصوتية.</li>
+              <li>تسجيل البيانات وتحليلها باستخدام برامج متخصصة.</li>
+              <li>مقارنة النتائج مع المعايير الدولية.</li>
+            </ol>
+            <p>سيناريو توضيحي: كانت نسبة العيوب 0.8% مما يدل على جودة عالية للحام.</p>
+          </div>
+          <div class="detailed-test-steps">
+            <p>توصيات: استخدام أجهزة فحص معتمدة والتأكد من إجراء الاختبار في بيئة نظيفة.</p>
+          </div>
+          <div class="test-calc">
+            <p class="calc-instructions">أدخل رقم العينة ونسبة العيوب (%) ثم اضغط على "احسب النتيجة".</p>
+            <form class="calc-form" data-test="weld">
+              <div class="calc-step">
+                <label>رقم العينة:</label>
+                <input type="number" name="sampleNumber" placeholder="6">
+              </div>
+              <div class="calc-step">
+                <label>نسبة العيوب (%):</label>
+                <input type="number" name="defectPercentage" placeholder="1">
+              </div>
+              <div class="calc-step">
+                <button type="button" class="calc-submit-btn">احسب النتيجة</button>
+              </div>
+            </form>
+            <div class="calc-result">
+              <h4>النتيجة:</h4>
+              <p class="result-text"></p>
+              <canvas class="result-chart"></canvas>
+              <p class="result-recommendation"></p>
+            </div>
+          </div>
+          <button class="test-calc-btn">إجراء الإختبار</button>
+        </div>
+      </section>
+      <section id="phase4">
+        <h1>المرحلة 4: اختبارات التشطيبات والمرافق – تفاصيل فنية متقدمة</h1>
+        <h2>تقييم أداء المواد التشطيبية والأنظمة الكهربائية والميكانيكية</h2>
+        <div class="test-card">
+          <h3><i class="fas fa-brush"></i> اختبار التلاصق (Adhesion Test)</h3>
+          <div class="test-details">
+            <p><span>التعريف:</span> قياس قوة التصاق المواد التشطيبية مثل الدهانات والبلاط وفق معايير ASTM D3359 وISO 2409.</p>
+            <p><span>الهدف:</span> ضمان ثبات المادة التشطيبية على السطح ومنع تقشيرها.</p>
+            <p><span>التفاصيل:</span> تحليل سماكة الطبقة ومدة التجفيف لتقييم جودة الالتصاق.</p>
+            <p><span>الفترة:</span> يوم للتحضير، 24-48 ساعة للتجفيف، ثم الاختبار.</p>
+            <p><span>الظروف:</span> إجراء الاختبار في بيئة ذات درجة حرارة ورطوبة ثابتة.</p>
+            <p><span>المسببات:</span> ضعف الالتصاق يؤدي إلى تقشير المادة التشطيبية.</p>
+            <p><span>قراءة النتائج:</span> مقارنة النتائج مع معايير ASTM وISO.</p>
+          </div>
+          <div class="test-action">
+            <h4>خطوات إجراء اختبار التلاصق وفق المعايير الدولية</h4>
+            <ol>
+              <li>تطبيق المادة التشطيبية على سطح نظيف وجاف.</li>
+              <li>ترك المادة لتجف في ظروف مناخية محكمة.</li>
+              <li>قياس قوة الالتصاق باستخدام جهاز قياس الشد.</li>
+              <li>مقارنة النتائج مع المعايير الدولية.</li>
+            </ol>
+            <p>سيناريو توضيحي: سجل الاختبار نسبة التلاصق 92% مما يدل على تطبيق مثالي.</p>
+          </div>
+          <div class="detailed-test-steps">
+            <p>توصيات: توثيق التجفيف واستخدام معدات دقيقة لضمان ثبات النتائج.</p>
+          </div>
+          <div class="test-calc">
+            <p class="calc-instructions">أدخل رقم العينة ونسبة الالتصاق (%) ثم اضغط على "احسب النتيجة".</p>
+            <form class="calc-form" data-test="adhesion">
+              <div class="calc-step">
+                <label>رقم العينة:</label>
+                <input type="number" name="sampleNumber" placeholder="7">
+              </div>
+              <div class="calc-step">
+                <label>نسبة الالتصاق (%):</label>
+                <input type="number" name="adhesion" placeholder="92">
+              </div>
+              <div class="calc-step">
+                <button type="button" class="calc-submit-btn">احسب النتيجة</button>
+              </div>
+            </form>
+            <div class="calc-result">
+              <h4>النتيجة:</h4>
+              <p class="result-text"></p>
+              <canvas class="result-chart"></canvas>
+              <p class="result-recommendation"></p>
+            </div>
+          </div>
+          <button class="test-calc-btn">إجراء الإختبار</button>
+        </div>
+        <div class="test-card">
+          <h3><i class="fas fa-bolt"></i> اختبار الأنظمة الكهربائية (Electrical Systems Testing)</h3>
+          <div class="test-details">
+            <p><span>التعريف:</span> فحص أداء الأنظمة الكهربائية باستخدام أجهزة قياس رقمية وفق معايير IEC وNEC.</p>
+            <p><span>الهدف:</span> ضمان سلامة وكفاءة توزيع الطاقة في المبنى.</p>
+            <p><span>التفاصيل:</span> تسجيل بيانات الجهد والتيار على مدار 24 ساعة وتحليلها لرصد التقلبات.</p>
+            <p><span>الفترة:</span> من يوم إلى يوم ونصف مع إعداد تقرير خلال 2-3 أيام.</p>
+            <p><span>الظروف:</span> إجراء الاختبار في بيئة مخبرية منظمة.</p>
+            <p><span>المسببات:</span> عدم استقرار النظام يؤدي إلى أعطال كهربائية.</p>
+            <p><span>قراءة النتائج:</span> مقارنة البيانات مع معايير IEC وNEC.</p>
+          </div>
+          <div class="test-action">
+            <h4>خطوات إجراء اختبار الأنظمة الكهربائية وفق المعايير الدولية</h4>
+            <ol>
+              <li>توصيل أجهزة القياس لجميع الدوائر الكهربائية.</li>
+              <li>تسجيل بيانات الجهد والتيار على مدار 24 ساعة.</li>
+              <li>تحليل البيانات باستخدام برامج متقدمة.</li>
+              <li>مقارنة النتائج مع المعايير الدولية.</li>
+            </ol>
+            <p>سيناريو توضيحي: كانت القدرة الكهربائية 2400 وات مع بعض التقلبات مما يشير إلى استقرار نسبي للنظام.</p>
+          </div>
+          <div class="detailed-test-steps">
+            <p>توصيات: استخدام نظم تسجيل حديثة ومعايرة الأجهزة بدقة.</p>
+          </div>
+          <div class="test-calc">
+            <p class="calc-instructions">أدخل رقم الدائرة وقيمتي الجهد (V) والتيار (A) ثم اضغط على "احسب النتيجة".</p>
+            <form class="calc-form" data-test="electrical">
+              <div class="calc-step">
+                <label>رقم الدائرة:</label>
+                <input type="number" name="circuitNumber" placeholder="8">
+              </div>
+              <div class="calc-step">
+                <label>قيمة الجهد (V):</label>
+                <input type="number" name="voltage" placeholder="220">
+              </div>
+              <div class="calc-step">
+                <label>قيمة التيار (A):</label>
+                <input type="number" name="current" placeholder="10">
+              </div>
+              <div class="calc-step">
+                <button type="button" class="calc-submit-btn">احسب النتيجة</button>
+              </div>
+            </form>
+            <div class="calc-result">
+              <h4>النتيجة:</h4>
+              <p class="result-text"></p>
+              <canvas class="result-chart"></canvas>
+              <p class="result-recommendation"></p>
+            </div>
+          </div>
+          <button class="test-calc-btn">إجراء الإختبار</button>
+        </div>
+      </section>
+      <section id="phase5">
+        <h1>المرحلة 5: الفحوصات النهائية والتصديق – مراجعة شاملة</h1>
+        <h2>التقييم النهائي للمبنى وإعداد التقارير المتكاملة</h2>
+        <div class="test-card">
+          <h3><i class="fas fa-clipboard-check"></i> الفحص النهائي للمبنى (Final Building Inspection)</h3>
+          <div class="test-details">
+            <p><span>التعريف:</span> تقييم شامل لجميع أنظمة المبنى باستخدام تقنيات تصوير متطورة ومسح ثلاثي الأبعاد.</p>
+            <p><span>الهدف:</span> التأكد من استيفاء المبنى لمتطلبات الجودة والسلامة قبل التسليم.</p>
+            <p><span>التفاصيل:</span> توثيق العيوب باستخدام كاميرات عالية الدقة وتحليلها وفق معايير دولية.</p>
+            <p><span>الفترة:</span> 1-2 يوم للتفقد وتقرير تحليلي خلال 3-4 أيام.</p>
+            <p><span>الظروف:</span> إجراء الفحص في بيئة مستقرة مع إضاءة طبيعية وصناعية.</p>
+            <p><span>المسببات:</span> تجاهل الفحص بدقة يؤدي إلى تسليم مبنى به عيوب خطيرة.</p>
+            <p><span>قراءة النتائج:</span> تحليل النتائج وتوثيق العيوب مقارنةً بالمعايير الدولية.</p>
+          </div>
+          <div class="test-action">
+            <h4>خطوات إجراء الفحص النهائي وفق المعايير الدولية</h4>
+            <ol>
+              <li>إجراء جولة تفقدية شاملة باستخدام تقنيات التصوير المتقدمة.</li>
+              <li>تسجيل كافة البيانات والملاحظات باستخدام أجهزة حديثة.</li>
+              <li>تحليل البيانات باستخدام برمجيات متقدمة لتحديد نسبة العيوب.</li>
+              <li>إعداد تقرير شامل مع توصيات للتحسين.</li>
+            </ol>
+            <p>سيناريو توضيحي: كانت نسبة العيوب 2% مما يدل على جودة فنية جيدة مع الحاجة لبعض التحسينات.</p>
+          </div>
+          <div class="detailed-test-steps">
+            <p>توصيات: توثيق الملاحظات باستخدام التصوير ثلاثي الأبعاد والتأكد من شمولية التقرير النهائي.</p>
+          </div>
+          <div class="test-calc">
+            <p class="calc-instructions">أدخل رقم القسم ونسبة العيوب (%) ثم اضغط على "احسب النتيجة".</p>
+            <form class="calc-form" data-test="final">
+              <div class="calc-step">
+                <label>رقم القسم:</label>
+                <input type="number" name="sectionNumber" placeholder="9">
+              </div>
+              <div class="calc-step">
+                <label>نسبة العيوب (%):</label>
+                <input type="number" name="defectRate" placeholder="2">
+              </div>
+              <div class="calc-step">
+                <button type="button" class="calc-submit-btn">احسب النتيجة</button>
+              </div>
+            </form>
+            <div class="calc-result">
+              <h4>النتيجة:</h4>
+              <p class="result-text"></p>
+              <canvas class="result-chart"></canvas>
+              <p class="result-recommendation"></p>
+            </div>
+          </div>
+          <button class="test-calc-btn">إجراء الإختبار</button>
+        </div>
+      </section>
+      <section id="phase6">
+        <h1>المرحلة 6: الفحوصات والإختبارات الإضافية – معلومات فنية متطورة</h1>
+        <h2>اختبارات متقدمة لتعزيز جودة واستدامة المشروع</h2>
+        <div class="test-card">
+          <h3><i class="fas fa-flask"></i> اختبار التآكل (Corrosion Testing)</h3>
+          <div class="test-details">
+            <p><span>التعريف:</span> قياس معدل تآكل المواد المعدنية باستخدام تقنيات التيار الكهربائي والتحليل الطيفي وفق معايير NACE.</p>
+            <p><span>الهدف:</span> الكشف المبكر عن علامات التآكل لتحديد الحاجة لإجراءات وقائية إضافية.</p>
+            <p><span>التفاصيل:</span> تحليل معدل التآكل بدقة مع مقارنة النتائج بمعايير NACE.</p>
+            <p><span>الفترة:</span> 2-3 أيام لجمع العينات والتحليل.</p>
+            <p><span>الظروف:</span> عرض العينات لظروف مماثلة للظروف المتوقعة.</p>
+            <p><span>المسببات:</span> ارتفاع معدل التآكل يؤدي إلى ضعف هياكل التسليح.</p>
+            <p><span>قراءة النتائج:</span> مقارنة النتائج مع معايير NACE باستخدام نماذج حسابية دقيقة.</p>
+          </div>
+          <div class="test-action">
+            <h4>خطوات إجراء اختبار التآكل وفق المعايير الدولية</h4>
+            <ol>
+              <li>جمع عينات من المواد المعدنية من مواقع مختلفة.</li>
+              <li>تعريض العينات لظروف بيئية مماثلة.</li>
+              <li>قياس معدل التآكل باستخدام جهاز قياس التيار الكهربائي.</li>
+              <li>مقارنة النتائج مع معايير NACE.</li>
+            </ol>
+            <p>سيناريو توضيحي: كان معدل التآكل 2.5% مما يدل على حماية مناسبة مع الحاجة للمتابعة.</p>
+          </div>
+          <div class="detailed-test-steps">
+            <p>توصيات: إجراء الاختبار على عينات متعددة وتكرار القياسات لضمان الدقة.</p>
+          </div>
+          <div class="test-calc">
+            <p class="calc-instructions">أدخل رقم العينة ومعدل التآكل (%) ثم اضغط على "احسب النتيجة".</p>
+            <form class="calc-form" data-test="corrosion">
+              <div class="calc-step">
+                <label>رقم العينة:</label>
+                <input type="number" name="sampleNumber" placeholder="10">
+              </div>
+              <div class="calc-step">
+                <label>معدل التآكل (%):</label>
+                <input type="number" name="corrosionRate" placeholder="3">
+              </div>
+              <div class="calc-step">
+                <button type="button" class="calc-submit-btn">احسب النتيجة</button>
+              </div>
+            </form>
+            <div class="calc-result">
+              <h4>النتيجة:</h4>
+              <p class="result-text"></p>
+              <canvas class="result-chart"></canvas>
+              <p class="result-recommendation"></p>
+            </div>
+          </div>
+          <button class="test-calc-btn">إجراء الإختبار</button>
+        </div>
+      </section>
+      <section id="examples">
+        <h1>أمثلة توضيحية وتفاعلية (30 مثال)</h1>
+        <!-- مثال 1 -->
+        <div class="chart-container">
+          <canvas id="chart1_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 1 – توزيع نسب التربة:</strong> تم أخذ عينة من موقع مبنى سكني افتراضي لتقييم جودة التربة لاستقرار الأساسات.
+          </p>
+          <p><strong>الشرح:</strong> تم قياس نسب الرمل والطين والحصى؛ تساعد النتائج في اختيار تقنيات تحسين التربة.</p>
+          <p><strong>الرسم البياني:</strong> يُظهر توزيع النسب لكل مكون.</p>
+          <p><strong>الشرح التفسيري:</strong> يُبرز الرسم أهمية كل نسبة وتأثير ارتفاع نسبة الطين.</p>
+          <p><strong>التوصيات:</strong> في حالة عدم التوازن، يُنصح باستخدام تقنيات الدك.</p>
+          <p><strong>الخاتمة:</strong> التربة مناسبة مع المتابعة الدورية.</p>
+        </div>
+        <!-- مثال 2 -->
+        <div class="chart-container">
+          <canvas id="chart2_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 2 – تحليل المياه الجوفية:</strong> يوضح عمق المياه ونسبة المعادن الثقيلة لتقييم جودتها.
+          </p>
+          <p><strong>الشرح:</strong> تم تحليل عمق المياه وتركيبتها الكيميائية.</p>
+          <p><strong>الرسم البياني:</strong> يُظهر مقارنة بين عمق المياه ونسبة المعادن الثقيلة.</p>
+          <p><strong>الشرح التفسيري:</strong> يوضح العلاقة بين العمق وتحسن الجودة.</p>
+          <p><strong>التوصيات:</strong> يُنصح بإجراءات معالجة إذا كانت الجودة دون المستوى.</p>
+          <p><strong>الخاتمة:</strong> المياه جيدة مع ضرورة متابعة مستمرة.</p>
+        </div>
+        <!-- مثال 3 -->
+        <div class="chart-container">
+          <canvas id="chart3_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 3 – اختبار الخرسانة:</strong> تحليل قوة الضغط لعينة خرسانة من مبنى صناعي افتراضي.
+          </p>
+          <p><strong>الشرح:</strong> تم قياس قوة الضغط للتأكد من مطابقة الخرسانة لمتطلبات التصميم.</p>
+          <p><strong>الرسم البياني:</strong> يُظهر منحنى الضغط مع نقاط الذروة والانحدار.</p>
+          <p><strong>الشرح التفسيري:</strong> يوضح جودة الخلطة وأهمية المعالجة الدقيقة.</p>
+          <p><strong>التوصيات:</strong> تحسين الخلطة إذا كانت القوة منخفضة.</p>
+          <p><strong>الخاتمة:</strong> الخرسانة مطابقة مع ضرورة المتابعة المستمرة.</p>
+        </div>
+        <!-- مثال 4 -->
+        <div class="chart-container">
+          <canvas id="chart4_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 4 – اختبار الدك (ضغط التربة):</strong> تحليل كثافة التربة بعد الدك في موقع صناعي افتراضي.
+          </p>
+          <p><strong>الشرح:</strong> تم قياس الكثافة للتأكد من أن التربة محكمة كأساس متين.</p>
+          <p><strong>الرسم البياني:</strong> يُظهر نسبة الكثافة المحققة مقارنة بالمعايير.</p>
+          <p><strong>الشرح التفسيري:</strong> يشير الرسم إلى نجاح عملية الدك وجودة التربة.</p>
+          <p><strong>التوصيات:</strong> إعادة عملية الدك إذا كانت النسبة منخفضة.</p>
+          <p><strong>الخاتمة:</strong> التربة جاهزة مع المتابعة.</p>
+        </div>
+        <!-- مثال 5 -->
+        <div class="chart-container">
+          <canvas id="chart5_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 5 – اختبار الحديد:</strong> تقييم مقاومة حديد التسليح في مبنى سكني افتراضي.
+          </p>
+          <p><strong>الشرح:</strong> تم قياس مقاومة الشد للتأكد من ملاءمة الحديد لتحمل الأحمال.</p>
+          <p><strong>الرسم البياني:</strong> يُظهر منحنى الإجهاد مع تقدير مقاومة الشد.</p>
+          <p><strong>الشرح التفسيري:</strong> يبرز جودة الحديد واستجابته للإجهاد.</p>
+          <p><strong>التوصيات:</strong> استخدام حديد بمعايير أعلى إذا كانت المقاومة منخفضة.</p>
+          <p><strong>الخاتمة:</strong> الحديد مطابق مع المتابعة الدورية.</p>
+        </div>
+        <!-- مثال 6 -->
+        <div class="chart-container">
+          <canvas id="chart6_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 6 – تحليل اتجاه تغيرات التربة:</strong> رسم بياني خطي يوضح تغير نسب التربة مع الزمن في موقع افتراضي.
+          </p>
+          <p><strong>الشرح:</strong> يوضح الاتجاه العام لتغير نسب الرمل والطين والحصى على مدار فترة زمنية محددة.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني خطي.</p>
+          <p><strong>الشرح التفسيري:</strong> يظهر استقرار أو تقلب نسب المكونات وتأثيره على الأساسات.</p>
+          <p><strong>التوصيات:</strong> في حال وجود تقلبات كبيرة، يُنصح بإجراءات تحسين التربة.</p>
+          <p><strong>الخاتمة:</strong> الاتجاهات مستقرة مع ضرورة المراقبة الدورية.</p>
+        </div>
+        <!-- مثال 7 -->
+        <div class="chart-container">
+          <canvas id="chart7_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 7 – توزيع نسب العناصر في التربة:</strong> رسم بياني دائري لتوضيح نسب الرمل والطين والحصى.
+          </p>
+          <p><strong>الشرح:</strong> يتم توزيع النسب على شكل دائرة لتسهيل المقارنة البصرية بين المكونات.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني دائري (pie chart).</p>
+          <p><strong>الشرح التفسيري:</strong> يساعد الرسم في فهم النسب النسبية لكل مكون.</p>
+          <p><strong>التوصيات:</strong> ضمان توازن النسب للحصول على تربة مستقرة.</p>
+          <p><strong>الخاتمة:</strong> توزيع متوازن للنسب مع متابعة مستمرة.</p>
+        </div>
+        <!-- مثال 8 -->
+        <div class="chart-container">
+          <canvas id="chart8_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 8 – تحليل جودة مواد التشطيب:</strong> رسم بياني على شكل doughnut يوضح نسب الالتصاق في مواد التشطيب.
+          </p>
+          <p><strong>الشرح:</strong> يتم تقسيم البيانات على شكل حلقة لتوضيح النسبة المئوية للالتصاق.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني doughnut.</p>
+          <p><strong>الشرح التفسيري:</strong> يُبرز الرسم فعالية التطبيق وجودة التشطيب.</p>
+          <p><strong>التوصيات:</strong> تحسين التطبيق إذا كانت النسبة منخفضة.</p>
+          <p><strong>الخاتمة:</strong> مواد التشطيب مناسبة مع توصيات لتحسين التطبيق.</p>
+        </div>
+        <!-- مثال 9 -->
+        <div class="chart-container">
+          <canvas id="chart9_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 9 – تحليل أداء الأنظمة الهيكلية:</strong> رسم بياني راداري يقارن مؤشرات الأداء لمختلف الأنظمة.
+          </p>
+          <p><strong>الشرح:</strong> يُستخدم الرسم الراداري لتقييم نقاط القوة والضعف في الهيكل.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني راداري (radar chart).</p>
+          <p><strong>الشرح التفسيري:</strong> يساعد الرسم في تحديد المجالات التي تحتاج إلى تحسين.</p>
+          <p><strong>التوصيات:</strong> اتخاذ إجراءات لتحسين النقاط الضعيفة في الهيكل.</p>
+          <p><strong>الخاتمة:</strong> أداء الأنظمة الهيكلية جيد مع بعض التحسينات اللازمة.</p>
+        </div>
+        <!-- مثال 10 -->
+        <div class="chart-container">
+          <canvas id="chart10_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 10 – تقييم استجابة المبنى للظروف المناخية:</strong> رسم بياني polarArea يقارن معايير استجابة المبنى.
+          </p>
+          <p><strong>الشرح:</strong> يتم قياس عدة مؤشرات مثل الحرارة والرطوبة لتقييم استجابة المبنى.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني polarArea.</p>
+          <p><strong>الشرح التفسيري:</strong> يوضح توازن العوامل البيئية وتأثيرها على الأداء العام.</p>
+          <p><strong>التوصيات:</strong> تعزيز العزل والتصميم لمواجهة الظروف المتقلبة.</p>
+          <p><strong>الخاتمة:</strong> استجابة المبنى جيدة مع إمكانيات لتحسين الأداء.</p>
+        </div>
+        <!-- مثال 11 -->
+        <div class="chart-container">
+          <canvas id="chart11_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 11 – تحليل توزيع الأحمال:</strong> رسم بياني bubble يُظهر توزيع الأحمال في هيكل المبنى.
+          </p>
+          <p><strong>الشرح:</strong> يُستخدم الرسم لتوضيح توزيع الأحمال مع تحديد الأحجام المختلفة لكل منطقة.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني bubble.</p>
+          <p><strong>الشرح التفسيري:</strong> يساعد الرسم في تحديد المناطق التي تتعرض لضغط أكبر.</p>
+          <p><strong>التوصيات:</strong> إعادة توزيع الأحمال لتحسين استقرار الهيكل.</p>
+          <p><strong>الخاتمة:</strong> توزيع الأحمال جيد مع بعض التعديلات اللازمة.</p>
+        </div>
+        <!-- مثال 12 -->
+        <div class="chart-container">
+          <canvas id="chart12_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 12 – مقارنة معايير الأداء الميداني:</strong> رسم بياني أفقي يقارن معايير الأداء في عدة مواقع.
+          </p>
+          <p><strong>الشرح:</strong> عرض المؤشرات بشكل أفقي لتسهيل المقارنة بين المواقع.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني أفقي (bar chart مع indexAxis: 'y').</p>
+          <p><strong>الشرح التفسيري:</strong> يوضح الفروقات بين المواقع من حيث الأداء.</p>
+          <p><strong>التوصيات:</strong> تطبيق التحسينات في المواقع ذات الأداء المنخفض.</p>
+          <p><strong>الخاتمة:</strong> الأداء متباين مع الحاجة لبعض التدخلات.</p>
+        </div>
+        <!-- مثال 13 -->
+        <div class="chart-container">
+          <canvas id="chart13_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 13 – تحليل تغيرات درجات الحرارة:</strong> رسم بياني خطي يوضح تغير درجات الحرارة الداخلية للمبنى على مدار اليوم.
+          </p>
+          <p><strong>الشرح:</strong> تحليل بيانات درجات الحرارة لتقييم كفاءة نظام التكييف.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني خطي (line chart).</p>
+          <p><strong>الشرح التفسيري:</strong> يوضح استقرار درجات الحرارة وتأثير نظام التكييف.</p>
+          <p><strong>التوصيات:</strong> ضبط النظام لتحسين استقرار درجات الحرارة.</p>
+          <p><strong>الخاتمة:</strong> الأداء الحراري جيد مع بعض التعديلات.</p>
+        </div>
+        <!-- مثال 14 -->
+        <div class="chart-container">
+          <canvas id="chart14_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 14 – توزيع استهلاك الطاقة:</strong> رسم بياني دائري يقارن استهلاك الطاقة بين أنظمة مختلفة.
+          </p>
+          <p><strong>الشرح:</strong> يتم تقسيم استهلاك الطاقة على شكل نسب مئوية.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني دائري (pie chart).</p>
+          <p><strong>الشرح التفسيري:</strong> يساعد الرسم في فهم توزيع استهلاك الطاقة بين الأنظمة.</p>
+          <p><strong>التوصيات:</strong> تبني أنظمة ذات كفاءة أعلى لتقليل الاستهلاك.</p>
+          <p><strong>الخاتمة:</strong> توزيع الطاقة متوازن مع إمكانية توفير أكبر.</p>
+        </div>
+        <!-- مثال 15 -->
+        <div class="chart-container">
+          <canvas id="chart15_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 15 – تحليل جودة مواد التشطيب:</strong> رسم بياني doughnut يوضح نسب الالتصاق في مواد التشطيب.
+          </p>
+          <p><strong>الشرح:</strong> يتم تقسيم البيانات على شكل حلقة لتوضيح النسبة المئوية للالتصاق.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني doughnut.</p>
+          <p><strong>الشرح التفسيري:</strong> يُبرز الرسم فعالية التطبيق وجودة التشطيب.</p>
+          <p><strong>التوصيات:</strong> تحسين التطبيق إذا كانت النسبة منخفضة.</p>
+          <p><strong>الخاتمة:</strong> مواد التشطيب مناسبة مع توصيات لتحسين التطبيق.</p>
+        </div>
+        <!-- مثال 16 -->
+        <div class="chart-container">
+          <canvas id="chart16_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 16 – اختبار العزل الحراري:</strong> تقييم كفاءة مواد العزل الحراري في مبنى سكني.
+          </p>
+          <p><strong>الشرح:</strong> قياس معدل انتقال الحرارة لتحديد كفاءة العزل.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني خطي (line chart) يوضح فروق درجات الحرارة بين الداخل والخارج.</p>
+          <p><strong>الشرح التفسيري:</strong> يبرز الرسم فعالية العزل في تقليل الفقد الحراري.</p>
+          <p><strong>التوصيات:</strong> استخدام مواد عزل متطورة لتحسين الأداء الحراري.</p>
+          <p><strong>الخاتمة:</strong> العزل الحراري جيد مع إمكانية تحسين بسيط.</p>
+        </div>
+        <!-- مثال 17 -->
+        <div class="chart-container">
+          <canvas id="chart17_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 17 – اختبار نظام الإنارة الذكية:</strong> تقييم كفاءة أنظمة الإضاءة في مبنى حديث.
+          </p>
+          <p><strong>الشرح:</strong> تحليل استهلاك الطاقة وكفاءة الإضاءة باستخدام نظام إنارة ذكي.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني خطي (line chart) يوضح مقارنة استهلاك الطاقة بين الإنارة التقليدية والذكية.</p>
+          <p><strong>الشرح التفسيري:</strong> يوضح تأثير النظام الذكي على توفير الطاقة.</p>
+          <p><strong>التوصيات:</strong> اعتماد أنظمة إنارة ذكية لتقليل استهلاك الطاقة.</p>
+          <p><strong>الخاتمة:</strong> نظام الإنارة فعال ويوفر الطاقة بشكل ملحوظ.</p>
+        </div>
+        <!-- مثال 18 -->
+        <div class="chart-container">
+          <canvas id="chart18_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 18 – اختبار كفاءة أنظمة التكييف:</strong> تقييم أداء أنظمة التكييف في مبنى تجاري.
+          </p>
+          <p><strong>الشرح:</strong> قياس درجات الحرارة الداخلية والخارجية لتقييم كفاءة نظام التكييف.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني خطي (line chart) يوضح تغير درجات الحرارة على مدار اليوم.</p>
+          <p><strong>الشرح التفسيري:</strong> يبرز استقرار درجات الحرارة الداخلية وتأثير نظام التكييف.</p>
+          <p><strong>التوصيات:</strong> ضبط إعدادات التكييف لتحقيق استقرار حراري أفضل.</p>
+          <p><strong>الخاتمة:</strong> نظام التكييف يعمل بشكل جيد مع بعض التعديلات.</p>
+        </div>
+        <!-- مثال 19 -->
+        <div class="chart-container">
+          <canvas id="chart19_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 19 – اختبار أنظمة المراقبة الذكية:</strong> تقييم أداء أنظمة المراقبة في منشأة حكومية.
+          </p>
+          <p><strong>الشرح:</strong> تحليل بيانات الكاميرات وأجهزة الاستشعار لرصد الحوادث والاستجابة لها.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني أفقي (bar chart مع indexAxis: 'y') يُظهر معدل الاستجابة وعدد الإنذارات.</p>
+          <p><strong>الشرح التفسيري:</strong> يوضح فعالية النظام في الكشف المبكر عن المخاطر.</p>
+          <p><strong>التوصيات:</strong> تحسين النظام في حال وجود تأخير في الاستجابة.</p>
+          <p><strong>الخاتمة:</strong> أنظمة المراقبة فعالة مع بعض التحسينات اللازمة.</p>
+        </div>
+        <!-- مثال 20 -->
+        <div class="chart-container">
+          <canvas id="chart20_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 20 – اختبار الأداء البيئي للمبنى:</strong> مقارنة استهلاك الطاقة وانبعاثات CO2 في مبنى أخضر.
+          </p>
+          <p><strong>الشرح:</strong> تحليل بيانات استهلاك الطاقة وتأثيرها على البيئة.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني (bar chart) يُظهر مقارنة بين استهلاك الطاقة والانبعاثات.</p>
+          <p><strong>الشرح التفسيري:</strong> يوضح العلاقة بين كفاءة الطاقة وانخفاض الانبعاثات.</p>
+          <p><strong>التوصيات:</strong> تبني تقنيات خضراء لتحسين الأداء البيئي.</p>
+          <p><strong>الخاتمة:</strong> الأداء البيئي جيد مع إمكانيات لتحسين الاستدامة.</p>
+        </div>
+        <!-- مثال 21 -->
+        <div class="chart-container">
+          <canvas id="chart21_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 21 – اختبار توزيع الأحمال:</strong> تحليل توزيع الأحمال في هيكل مبنى صناعي.
+          </p>
+          <p><strong>الشرح:</strong> قياس توزيع الأحمال لتحديد نقاط الضعف في الهيكل.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني أفقي (bar chart مع indexAxis: 'y') يُظهر توزيع الأحمال في مناطق مختلفة.</p>
+          <p><strong>الشرح التفسيري:</strong> يبرز أهمية توزيع الأحمال بشكل متوازن للحفاظ على سلامة الهيكل.</p>
+          <p><strong>التوصيات:</strong> إعادة تصميم بعض الأقسام لضمان توزيع متساوٍ للأحمال.</p>
+          <p><strong>الخاتمة:</strong> الهيكل متين مع بعض التعديلات.</p>
+        </div>
+        <!-- مثال 22 -->
+        <div class="chart-container">
+          <canvas id="chart22_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 22 – اختبار جودة العزل الصوتي:</strong> تقييم كفاءة مواد العزل الصوتي في مبنى إداري.
+          </p>
+          <p><strong>الشرح:</strong> قياس مستويات الضوضاء قبل وبعد تركيب مواد العزل.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني (doughnut chart) يُظهر انخفاض مستويات الضوضاء.</p>
+          <p><strong>الشرح التفسيري:</strong> يوضح تأثير العزل الصوتي على تحسين بيئة العمل.</p>
+          <p><strong>التوصيات:</strong> استخدام مواد عزل عالية الكفاءة إذا كانت النتائج دون المستوى.</p>
+          <p><strong>الخاتمة:</strong> العزل الصوتي فعال مع بعض التحسينات.</p>
+        </div>
+        <!-- مثال 23 -->
+        <div class="chart-container">
+          <canvas id="chart23_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 23 – اختبار كفاءة أنظمة الإنارة:</strong> تحليل استهلاك الطاقة لأجهزة الإنارة في مبنى سكني.
+          </p>
+          <p><strong>الشرح:</strong> قياس استهلاك الطاقة وكفاءة الإضاءة لتقييم فعالية نظام الإنارة.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني (doughnut chart) يُظهر مقارنة استهلاك الطاقة بين أنظمة الإنارة.</p>
+          <p><strong>الشرح التفسيري:</strong> يوضح تأثير نظام الإنارة على تقليل الاستهلاك.</p>
+          <p><strong>التوصيات:</strong> اعتماد أنظمة إنارة ذكية لتحقيق وفورات أكبر.</p>
+          <p><strong>الخاتمة:</strong> نظام الإنارة فعال ويوفر الطاقة بشكل ملحوظ.</p>
+        </div>
+        <!-- مثال 24 -->
+        <div class="chart-container">
+          <canvas id="chart24_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 24 – اختبار كفاءة أنظمة التهوية:</strong> تقييم أداء أنظمة التهوية في مبنى تجاري.
+          </p>
+          <p><strong>الشرح:</strong> قياس معدلات تدفق الهواء وتوزيعه داخل المبنى.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني (polarArea chart) يُظهر توزيع تدفق الهواء.</p>
+          <p><strong>الشرح التفسيري:</strong> يبرز أهمية تحسين توزيع الهواء لراحة المستخدمين.</p>
+          <p><strong>التوصيات:</strong> ضبط إعدادات التهوية لتحسين توزيع الهواء.</p>
+          <p><strong>الخاتمة:</strong> أنظمة التهوية تعمل بشكل جيد مع إمكانية تحسين بسيطة.</p>
+        </div>
+        <!-- مثال 25 -->
+        <div class="chart-container">
+          <canvas id="chart25_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 25 – اختبار كفاءة أنظمة المراقبة:</strong> تقييم أداء أنظمة المراقبة الذكية في منشأة حكومية.
+          </p>
+          <p><strong>الشرح:</strong> تحليل بيانات الكاميرات وأجهزة الاستشعار لرصد الحوادث والاستجابة لها.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني (bubble chart) يُظهر معدل الاستجابة وعدد الإنذارات.</p>
+          <p><strong>الشرح التفسيري:</strong> يوضح فعالية النظام في الكشف المبكر عن المخاطر.</p>
+          <p><strong>التوصيات:</strong> تحسين النظام في حال وجود تأخير في الاستجابة.</p>
+          <p><strong>الخاتمة:</strong> أنظمة المراقبة فعالة مع بعض التحسينات اللازمة.</p>
+        </div>
+        <!-- مثال 26 -->
+        <div class="chart-container">
+          <canvas id="chart26_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 26 – اختبار كفاءة أنظمة التحكم الذكي:</strong> تقييم أداء الأنظمة الذكية في مبنى حديث.
+          </p>
+          <p><strong>الشرح:</strong> تحليل تكامل الأنظمة الذكية لتحسين الأداء التشغيلي.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني (line chart) يقارن الأداء قبل وبعد تطبيق الأنظمة الذكية.</p>
+          <p><strong>الشرح التفسيري:</strong> يوضح الفوائد التشغيلية لنظم التحكم الذكية.</p>
+          <p><strong>التوصيات:</strong> تطبيق الأنظمة الذكية لزيادة الكفاءة التشغيلية.</p>
+          <p><strong>الخاتمة:</strong> الأداء الذكي محسَّن مع فوائد ملحوظة.</p>
+        </div>
+        <!-- مثال 27 -->
+        <div class="chart-container">
+          <canvas id="chart27_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 27 – اختبار توزيع الأحمال:</strong> تحليل توزيع الأحمال في هيكل مبنى صناعي.
+          </p>
+          <p><strong>الشرح:</strong> قياس توزيع الأحمال لتحديد نقاط الضعف في الهيكل.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني أفقي (bar chart مع indexAxis: 'y') يُظهر توزيع الأحمال في مناطق مختلفة.</p>
+          <p><strong>الشرح التفسيري:</strong> يبرز أهمية توزيع الأحمال بشكل متوازن للحفاظ على سلامة الهيكل.</p>
+          <p><strong>التوصيات:</strong> إعادة تصميم بعض الأقسام لضمان توزيع متساوٍ للأحمال.</p>
+          <p><strong>الخاتمة:</strong> الهيكل متين مع بعض التعديلات.</p>
+        </div>
+        <!-- مثال 28 -->
+        <div class="chart-container">
+          <canvas id="chart28_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 28 – اختبار كفاءة أنظمة الإضاءة:</strong> تقييم أداء نظام التحكم في الإضاءة لتقليل استهلاك الطاقة.
+          </p>
+          <p><strong>الشرح:</strong> تحليل تأثير نظام التحكم على تقليل استهلاك الطاقة.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني (pie chart) يُظهر مقارنة استهلاك الطاقة قبل وبعد التطبيق.</p>
+          <p><strong>الشرح التفسيري:</strong> يوضح تأثير النظام على تقليل الاستهلاك.</p>
+          <p><strong>التوصيات:</strong> اعتماد نظام تحكم ذكي لتحقيق وفورات أكبر.</p>
+          <p><strong>الخاتمة:</strong> النظام فعال ويوفر الطاقة بشكل ملحوظ.</p>
+        </div>
+        <!-- مثال 29 -->
+        <div class="chart-container">
+          <canvas id="chart29_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 29 – اختبار كفاءة نظام التحكم في الإضاءة:</strong> تقييم أداء نظام التحكم في الإضاءة لتقليل استهلاك الطاقة.
+          </p>
+          <p><strong>الشرح:</strong> تحليل تأثير نظام التحكم على تقليل استهلاك الطاقة مقارنة بالأنظمة التقليدية.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني (doughnut chart) يقارن بين استهلاك الطاقة.</p>
+          <p><strong>الشرح التفسيري:</strong> يوضح مدى تأثير النظام على تقليل الاستهلاك.</p>
+          <p><strong>التوصيات:</strong> تطبيق النظام لتحقيق وفورات كبيرة.</p>
+          <p><strong>الخاتمة:</strong> النظام فعال جداً ويوفر الطاقة بشكل كبير.</p>
+        </div>
+        <!-- مثال 30 -->
+        <div class="chart-container">
+          <canvas id="chart30_ex"></canvas>
+          <p class="chart-description">
+            <strong>مثال 30 – اختبار الأداء الشامل للمبنى:</strong> تقييم تجميعي لجميع الفحوصات لتحديد كفاءة المبنى بشكل عام.
+          </p>
+          <p><strong>الشرح:</strong> تجميع مؤشرات جميع الاختبارات لإعطاء نظرة شاملة عن حالة المبنى.</p>
+          <p><strong>الرسم البياني:</strong> رسم بياني راداري (radar chart) يُظهر ملخص المؤشرات لجميع الفحوصات.</p>
+          <p><strong>الشرح التفسيري:</strong> يبرز الرسم نقاط القوة والضعف في المشروع بشكل متكامل.</p>
+          <p><strong>التوصيات:</strong> اتخاذ إجراءات تصحيحية لتحسين الأداء في المناطق الضعيفة.</p>
+          <p><strong>الخاتمة:</strong> المبنى يتمتع بأداء جيد مع فرص للتحسين المستمر.</p>
+        </div>
+      </section>
+      <section id="additionalInfo">
+        <h1>معلومات إضافية وتفصيلية</h1>
+        <div class="extra-section">
+          <h3>تفاصيل تقنية وإضافات متقدمة</h3>
+          <p>
+            يغطي هذا القسم أحدث التقنيات في تحليل البيانات، نظم الذكاء الاصطناعي، ونماذج المحاكاة الديناميكية لتحسين تصميم وإدارة المباني.
+          </p>
+          <p>
+            تُقدم استراتيجيات تحليل متكاملة تساعد على توقع التغييرات وتحديد الإجراءات التصحيحية اللازمة.
+          </p>
+        </div>
+        <div class="new-details">
+          <h3>استراتيجيات إدارة المخاطر والتحسين المستمر</h3>
+          <p>
+            تُستخدم البيانات المُجمعة لوضع خطط متقدمة لإدارة المخاطر تشمل نظام تنبيهي فوري وإجراءات تصحيحية مبنية على تحليل دقيق، مع توصيات لتحسين كفاءة الصيانة والتشغيل.
+          </p>
+        </div>
+      </section>
+      <section id="faq">
+        <h1>الأسئلة الشائعة (30 سؤال)</h1>
+        <input type="text" id="faqSearch" placeholder="ابحث عن سؤال..." />
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> ما أهمية فحص التربة قبل بدء البناء؟</h4>
+          <p>يساعد فحص التربة في تحديد قدرتها على دعم الأحمال واختيار نوع الأساسات المناسب.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> كيف يؤثر اختبار المياه الجوفية على تصميم الأساسات؟</h4>
+          <p>يساعد الاختبار في تحديد مستوى المياه وتركيبتها الكيميائية لتصميم نظام تصريف فعال.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> ما هي المعايير الدولية لفحص الخرسانة؟</h4>
+          <p>تشمل المعايير ASTM D422 وBS 1377 وACI 318.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> كيف يتم اختبار ضغط التربة وفقاً للمعايير؟</h4>
+          <p>يتم استخدام جهاز Proctor مع تسجيل بيانات الرطوبة والضغط لتحليل الكثافة.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> ما المعايير الدولية لاختبار الحديد؟</h4>
+          <p>تشمل معايير ASTM A370 وISO 6892.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> كيف يتم تقييم جودة اللحامات؟</h4>
+          <p>من خلال تقنيات الأشعة السينية والموجات فوق الصوتية وفقاً لـ AWS D1.1 وEN ISO 5817.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> ما أهمية اختبار الالتصاق لمواد التشطيب؟</h4>
+          <p>يساعد في ضمان ثبات المواد التشطيبية ومنع تقشيرها.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> كيف يتم اختبار الأنظمة الكهربائية؟</h4>
+          <p>يتم تسجيل بيانات الجهد والتيار على مدار 24 ساعة ومقارنتها مع معايير IEC وNEC.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> ما فوائد الفحص النهائي للمبنى؟</h4>
+          <p>يساعد في الكشف عن العيوب قبل التسليم وتحديد الحاجة لإجراءات تصحيحية.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> كيف تساهم تقنيات الاستشعار عن بعد في الفحص الميداني؟</h4>
+          <p>تمكن من متابعة الظروف البيئية بدقة وتحسين تخطيط الموقع.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> ما أهمية التحليل الإحصائي في تقارير الفحص؟</h4>
+          <p>يقدم رؤية دقيقة للاتجاهات ويساعد في اتخاذ قرارات تصحيحية مبنية على البيانات.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> كيف يتم تحسين دقة الفحوصات المختبرية؟</h4>
+          <p>من خلال استخدام أجهزة معايرة بدقة وتنفيذ الاختبارات في بيئة محكمة.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> ما هي الخطوات الأساسية لإجراء اختبار التربة؟</h4>
+          <p>أخذ العينات، تحليلها، ومقارنة النتائج مع المعايير الدولية.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> كيف يتم تحديد جودة المياه الجوفية؟</h4>
+          <p>من خلال قياس عمق المياه وتركيبتها الكيميائية وفق معايير WHO وEPA.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> ما هي معايير اختبار الخرسانة الأساسية؟</h4>
+          <p>تتضمن ASTM D422 وBS 1377 وACI 318.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> كيف يتم حساب مؤشر جودة التربة؟</h4>
+          <p>من خلال معادلة تجمع نسب الرمل والطين والحصى مع عوامل وزن محددة.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> ما العوامل المؤثرة في مقاومة الحديد؟</h4>
+          <p>تشمل جودة المادة، معايير التصنيع واختبارات الشد.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> كيف يتم تقييم جودة اللحامات؟</h4>
+          <p>من خلال تحليل نسبة العيوب باستخدام تقنيات غير تدميرية.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> ما هي العوامل الأساسية في اختبار الالتصاق؟</h4>
+          <p>تتضمن معدل التجفيف وسماكة الطبقة والتقنيات المستخدمة في التطبيق.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> كيف يتم اختبار أداء النظام الكهربائي؟</h4>
+          <p>من خلال تسجيل بيانات الجهد والتيار وتحليل القدرة الكهربائية.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> ما أهمية الفحص النهائي للمبنى؟</h4>
+          <p>يضمن استيفاء المبنى لمتطلبات الجودة والسلامة قبل التسليم النهائي.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> كيف تساهم تقنيات التصوير ثلاثي الأبعاد في الفحص النهائي؟</h4>
+          <p>توفر تفاصيل دقيقة عن العيوب وتساعد في إعداد تقارير شاملة.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> ما هي معايير اختبار التآكل؟</h4>
+          <p>تشمل معايير NACE ودقة قياس معدل التيار الكهربائي.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> كيف يمكن تحسين دقة الفحص الميداني؟</h4>
+          <p>من خلال استخدام أجهزة استشعار حديثة وتقنيات متقدمة لتسجيل البيانات.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> ما هي فوائد التحليل الشامل لجميع الفحوصات؟</h4>
+          <p>يعطي نظرة متكاملة على حالة المبنى ويساعد في اتخاذ قرارات تصحيحية دقيقة.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> كيف يتم ربط نتائج الفحوصات بالتوصيات الفنية؟</h4>
+          <p>عن طريق تحليل النتائج ومقارنتها مع المعايير الدولية لتقديم توصيات عملية.</p>
+        </div>
+        <div class="faq-item">
+          <h4><i class="fas fa-question-circle"></i> ما هي الخطوات الأساسية لإنشاء تقرير فني شامل؟</h4>
+          <p>جمع البيانات، تحليلها، وتقديم توصيات مستندة إلى المعايير الدولية.</p>
+        </div>
+      </section>
+      <section id="resources">
+        <h1>الموارد والمراجع</h1>
+        <div class="resources">
+          <ul>
+            <li><a href="https://www.astm.org" target="_blank"><i class="fas fa-external-link-alt"></i> ASTM International</a></li>
+            <li><a href="https://www.bsigroup.com" target="_blank"><i class="fas fa-external-link-alt"></i> British Standards Institution (BSI)</a></li>
+            <li><a href="https://www.iso.org" target="_blank"><i class="fas fa-external-link-alt"></i> International Organization for Standardization (ISO)</a></li>
+            <li><a href="https://www.who.int" target="_blank"><i class="fas fa-external-link-alt"></i> World Health Organization (WHO)</a></li>
+            <li><a href="https://www.epa.gov" target="_blank"><i class="fas fa-external-link-alt"></i> United States Environmental Protection Agency (EPA)</a></li>
+            <li><a href="https://www.iec.ch" target="_blank"><i class="fas fa-external-link-alt"></i> International Electrotechnical Commission (IEC)</a></li>
+            <li><a href="https://www.nfpa.org" target="_blank"><i class="fas fa-external-link-alt"></i> National Fire Protection Association (NFPA)</a></li>
+            <li><a href="https://www.concrete.org" target="_blank"><i class="fas fa-external-link-alt"></i> American Concrete Institute (ACI)</a></li>
+            <li><a href="https://www.wbdg.org" target="_blank"><i class="fas fa-external-link-alt"></i> Whole Building Design Guide</a></li>
+            <li><a href="https://www.nace.org" target="_blank"><i class="fas fa-external-link-alt"></i> NACE International (Corrosion)</a></li>
+            <li><a href="https://www.energystar.gov" target="_blank"><i class="fas fa-external-link-alt"></i> ENERGY STAR</a></li>
+            <li><a href="https://www.sei.org" target="_blank"><i class="fas fa-external-link-alt"></i> Structural Engineering Institute (SEI)</a></li>
+            <li><a href="https://www.sustainablebuildingsdirectory.com" target="_blank"><i class="fas fa-external-link-alt"></i> Sustainable Buildings Directory</a></li>
+            <li><a href="https://www.smartbuildingsmagazine.com" target="_blank"><i class="fas fa-external-link-alt"></i> Smart Buildings Magazine</a></li>
+            <li><a href="https://www.buildingperformanceconference.com" target="_blank"><i class="fas fa-external-link-alt"></i> Building Performance Conference</a></li>
+          </ul>
+        </div>
+      </section>
+      <section id="conclusion">
+        <h1>الخاتمة والتوصيات</h1>
+        <p>
+          تُظهر التحليلات أن الالتزام بالمعايير الدولية واستخدام أحدث التقنيات يسهم في تحقيق جودة عالية في المشاريع الإنشائية. تُعد التقارير التفصيلية والتوصيات الفنية أدوات أساسية لتقليل المخاطر وتحسين الأداء.
+        </p>
+        <ul>
+          <li>الاستثمار في التقنيات الحديثة لاختبار وتحليل المواد.</li>
+          <li>الالتزام بالمعايير الدولية وتحديثها بانتظام.</li>
+          <li>إعداد تقارير مفصلة تشمل تحليل إحصائي وتوصيات دقيقة.</li>
+          <li>تنفيذ اختبارات متابعة دورية لمراقبة أداء المبنى.</li>
+          <li>توفير برامج تدريبية لتعزيز مهارات الكوادر الفنية.</li>
+          <li>استخدام أنظمة ذكية لتحسين كفاءة التشغيل.</li>
+        </ul>
+        <p>
+          نأمل أن يكون هذا الدليل مرجعاً شاملاً يدعم اتخاذ القرارات الفنية والإدارية بدقة عالية.
+        </p>
+        <button id="downloadPDF" style="padding: 10px 20px; background-color: var(--accent-color); border: none; border-radius: 5px; color: #fff; cursor: pointer;">تنزيل التقرير كـ PDF</button>
+      </section>
+    </div>
+  </main>
+  <button id="backToTop">العودة للأعلى</button>
+  <footer>
+    <p>&copy; 2025 النظام المتكامل لدليل الفحوصات والاختبارات الإنشائية. جميع الحقوق محفوظة.</p>
+    <div class="social">
+      <a href="#" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" title="تويتر"><i class="fab fa-twitter"></i></a>
+      <a href="#" title="لينكد إن"><i class="fab fa-linkedin-in"></i></a>
+      <a href="#" title="يوتيوب"><i class="fab fa-youtube"></i></a>
+    </div>
+  </footer>
+  <script>
+    // الدوال الحسابية المحسنة
+    function calculateSoilTest(formData) {
+      const sand = Number(formData.get('sand'));
+      const clay = Number(formData.get('clay'));
+      const gravel = Number(formData.get('gravel'));
+      if (sand + clay + gravel !== 100) {
+        return { result: "خطأ: يجب أن يكون مجموع النسب 100٪.", recommendation: "يرجى التحقق من النسب وإعادة المحاولة." };
+      }
+      let qualityIndex = (sand * 0.25) + (clay * 0.4) + (gravel * 0.35);
+      if (clay > 40) {
+        qualityIndex -= (clay - 40) * 0.5;
+      }
+      let rec = qualityIndex >= 50 ? "التربة مناسبة للبناء وفقاً للمعايير الهندسية." : "التربة تحتاج إلى تحسين باستخدام تقنيات تحسين التربة.";
+      return { result: "مؤشر جودة التربة: " + qualityIndex.toFixed(2), recommendation: rec };
+    }
+    function calculateGroundwaterTest(formData) {
+      const waterDepth = Number(formData.get('waterLevel'));
+      const heavyMetals = Number(formData.get('heavyMetals'));
+      let qualityIndex = (waterDepth / 15) * 50 - (heavyMetals * 2);
+      let rec = qualityIndex >= 50 ? "جودة المياه جيدة وفقاً للمعايير الجيوتقنية." : "يوجد مؤشر على تلوث المياه؛ يُنصح بإجراءات معالجة.";
+      return { result: "مؤشر جودة المياه: " + qualityIndex.toFixed(2), recommendation: rec };
+    }
+    function calculateConcreteTest(formData) {
+      const compressiveStrength = Number(formData.get('compressiveStrength'));
+      let rec;
+      if (compressiveStrength >= 40) {
+        rec = "الخرسانة ممتازة وتتجاوز المتطلبات الأساسية.";
+      } else if (compressiveStrength >= 30) {
+        rec = "الخرسانة مطابقة للمعايير الأساسية.";
+      } else {
+        rec = "الخرسانة دون المستوى المطلوب؛ يُنصح بتعديل الخلطة.";
+      }
+      return { result: "قوة الضغط: " + compressiveStrength + " ميجا باسكال", recommendation: rec };
+    }
+    function calculateCompactionTest(formData) {
+      const compaction = Number(formData.get('compaction'));
+      let rec = compaction >= 95 ? "الكثافة المثالية محققة وفقاً للمعايير." : "الكثافة أقل؛ يُنصح بإعادة الدك.";
+      return { result: "نسبة الكثافة المحققة: " + compaction + "%", recommendation: rec };
+    }
+    function calculateSteelTest(formData) {
+      const tensileStrength = Number(formData.get('tensileStrength'));
+      let rec;
+      if (tensileStrength >= 580) {
+        rec = "حديد التسليح ذو جودة عالية تتجاوز المتطلبات.";
+      } else if (tensileStrength >= 550) {
+        rec = "حديد التسليح مطابق للمعايير الهندسية.";
+      } else {
+        rec = "حديد التسليح دون المستوى؛ يُنصح باستخدام مواد ذات جودة أعلى.";
+      }
+      return { result: "متوسط مقاومة الشد: " + tensileStrength + " ميجا باسكال", recommendation: rec };
+    }
+    function calculateWeldTest(formData) {
+      const defectPercentage = Number(formData.get('defectPercentage'));
+      let rec = defectPercentage <= 1 ? "جودة اللحام ممتازة وفقاً للمعايير الدولية." : defectPercentage <= 3 ? "جودة اللحام مقبولة ولكن تحتاج إلى تحسين." : "نسبة العيوب مرتفعة؛ يُنصح بإعادة تقييم عملية اللحام.";
+      return { result: "نسبة العيوب: " + defectPercentage + "%", recommendation: rec };
+    }
+    function calculateAdhesionTest(formData) {
+      const adhesion = Number(formData.get('adhesion'));
+      let rec = adhesion >= 95 ? "قوة الالتصاق ممتازة." : adhesion >= 90 ? "قوة الالتصاق جيدة." : "قد تحتاج المادة التشطيبية إلى إعادة التطبيق.";
+      return { result: "نسبة الالتصاق: " + adhesion + "%", recommendation: rec };
+    }
+    function calculateElectricalTest(formData) {
+      const voltage = Number(formData.get('voltage'));
+      const current = Number(formData.get('current'));
+      const power = voltage * current;
+      let rec;
+      if (power >= 2500) {
+        rec = "النظام الكهربائي يعمل بكفاءة عالية.";
+      } else if (power >= 2200) {
+        rec = "النظام مطابق للمعايير الأساسية.";
+      } else {
+        rec = "قد يحتاج النظام إلى ضبط لتحسين توزيع الطاقة.";
+      }
+      return { result: "القدرة الكهربائية: " + power + " وات", recommendation: rec };
+    }
+    function calculateFinalInspectionTest(formData) {
+      const defectRate = Number(formData.get('defectRate'));
+      let rec = defectRate < 3 ? "المبنى ممتاز من الناحية الفنية." : defectRate < 5 ? "المبنى جيد مع بعض التحسينات المطلوبة." : "المبنى يحتاج إلى إصلاحات طفيفة.";
+      return { result: "نسبة العيوب: " + defectRate + "%", recommendation: rec };
+    }
+    function calculateCorrosionTest(formData) {
+      const corrosionRate = Number(formData.get('corrosionRate'));
+      let rec = corrosionRate < 3 ? "معدل التآكل منخفض ومقبول." : corrosionRate < 5 ? "معدل التآكل على الحدود؛ يُنصح بالمراقبة المستمرة." : "معدل التآكل مرتفع؛ يُنصح بإجراءات وقائية إضافية.";
+      return { result: "معدل التآكل: " + corrosionRate + "%", recommendation: rec };
+    }
+    function updateChart(canvas, inputs) {
+      if (canvas.chartInstance) {
+        canvas.chartInstance.destroy();
+      }
+      canvas.chartInstance = new Chart(canvas.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: Array.from(inputs).map((_, i) => "الخطوة " + (i + 1)),
+          datasets: [{
+            label: 'القيم المُدخلة',
+            data: Array.from(inputs).map(input => Number(input.value)),
+            backgroundColor: 'rgba(75, 192, 192, 0.7)'
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'الرسم البياني للنتيجة'
+            },
+            legend: { position: 'bottom' }
+          }
+        }
+      });
+    }
+    // دالة تهيئة الرسوم البيانية للأمثلة مع دعم أنواع مختلفة
+    function initExampleChart(canvasId, dataLabels, dataValues, chartType = 'bar', bgColor = 'rgba(54, 162, 235, 0.7)') {
+      var ctx = document.getElementById(canvasId).getContext('2d');
+      var config = {
+        type: chartType,
+        data: {
+          labels: dataLabels,
+          datasets: [{
+            label: 'المؤشر',
+            data: dataValues,
+            backgroundColor: bgColor
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'مثال توضيحي'
+            },
+            legend: { position: 'bottom' }
+          }
+        }
+      };
+      // لدعم رسم bubble نستخدم البيانات كما هي دون تحويل
+      if(chartType === "bubble") {
+        config.data.datasets[0].data = dataValues;
+      }
+      // لدعم الرسم الأفقي، نضبط indexAxis إلى 'y'
+      if(chartType === "horizontalBar") {
+        config.options.indexAxis = 'y';
+        config.type = 'bar';
+      }
+      new Chart(ctx, config);
+    }
+    
+    // تهيئة الأمثلة من 1 إلى 30 باستخدام أنواع رسومية متنوعة
+    initExampleChart("chart1_ex", ["رمل", "طين", "حصى"], [45, 30, 25], "bar");
+    initExampleChart("chart2_ex", ["عمق المياه", "معادن ثقيلة"], [15, 5], "bar");
+    initExampleChart("chart3_ex", ["نقطة الذروة", "نقطة الانحدار"], [32, 28], "bar");
+    initExampleChart("chart4_ex", ["الكثافة"], [95], "bar");
+    initExampleChart("chart5_ex", ["مقاومة الشد"], [550], "bar");
+    initExampleChart("chart6_ex", ["نسبة الرمل", "نسبة الطين", "نسبة الحصى"], [40, 35, 25], "line");
+    initExampleChart("chart7_ex", ["رمل", "طين", "حصى"], [50, 25, 25], "pie");
+    initExampleChart("chart8_ex", ["التلاصق"], [93], "doughnut");
+    initExampleChart("chart9_ex", ["كفاءة", "مقاومة", "ثبات"], [80, 90, 70], "radar");
+    initExampleChart("chart10_ex", ["المؤشر"], [88], "polarArea");
+    initExampleChart("chart11_ex", ["منطقة 1", "منطقة 2", "منطقة 3"], [{x:10,y:20,r:15}, {x:20,y:35,r:10}, {x:30,y:45,r:20}], "bubble");
+    initExampleChart("chart12_ex", ["موقع 1", "موقع 2", "موقع 3"], [70, 85, 90], "horizontalBar", "rgba(255, 99, 132, 0.7)");
+    initExampleChart("chart13_ex", ["الفترة 1", "الفترة 2", "الفترة 3"], [28, 30, 32], "line");
+    initExampleChart("chart14_ex", ["فئة A", "فئة B", "فئة C"], [40, 35, 25], "pie");
+    initExampleChart("chart15_ex", ["معامل الالتصاق"], [94], "doughnut");
+    initExampleChart("chart16_ex", ["درجة الحرارة الداخلة", "الخارجة"], [22, 30], "line");
+    initExampleChart("chart17_ex", ["النظام القديم", "النظام الجديد"], [60, 80], "bar");
+    initExampleChart("chart18_ex", ["نسبة الاستهلاك"], [75], "doughnut");
+    initExampleChart("chart19_ex", ["موقع 1", "موقع 2", "موقع 3"], [70, 65, 80], "horizontalBar", "rgba(255, 159, 64, 0.7)");
+    initExampleChart("chart20_ex", ["الفترة الصباحية", "الفترة المسائية"], [24, 26], "line");
+    initExampleChart("chart21_ex", ["مقاومة", "ثبات", "كفاءة"], [550, 540, 530], "bar");
+    initExampleChart("chart22_ex", ["قبل العزل", "بعد العزل"], [75, 40], "doughnut");
+    initExampleChart("chart23_ex", ["النظام التقليدي", "النظام الذكي"], [100, 60], "radar");
+    initExampleChart("chart24_ex", ["تدفق الهواء"], [85], "pie");
+    initExampleChart("chart25_ex", ["القدرة"], [2400], "polarArea");
+    initExampleChart("chart26_ex", ["قبل", "بعد"], [2300, 2500], "line");
+    initExampleChart("chart27_ex", ["منطقة أ", "منطقة ب", "منطقة ج"], [80, 70, 90], "horizontalBar");
+    initExampleChart("chart28_ex", ["المقاومة"], [560], "bar", "rgba(153, 102, 255, 0.7)");
+    initExampleChart("chart29_ex", ["استهلاك الطاقة"], [200], "doughnut");
+    initExampleChart("chart30_ex", ["أداء النظام", "استجابة النظام", "تحمل النظام"], [85, 80, 90], "radar");
+    
+    document.querySelectorAll('.tab-link').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.tab-link').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        var target = this.getAttribute('data-target');
+        document.querySelectorAll('main section').forEach(section => {
+          section.classList.remove('active');
+          if (section.id === target) {
+            section.classList.add('active');
+          }
+        });
+      });
+    });
+    
+    document.querySelectorAll('.test-calc-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        var calcDiv = this.parentElement.querySelector('.test-calc');
+        if (calcDiv) {
+          calcDiv.style.display = (calcDiv.style.display === "block") ? "none" : "block";
+        }
+      });
+    });
+    
+    document.querySelectorAll('.calc-submit-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        var form = this.closest('.calc-form');
+        var testType = form.dataset.test;
+        var formData = new FormData(form);
+        var calculation;
+        switch(testType) {
+          case "soil":
+            calculation = calculateSoilTest(formData);
+            break;
+          case "groundwater":
+            calculation = calculateGroundwaterTest(formData);
+            break;
+          case "concrete":
+            calculation = calculateConcreteTest(formData);
+            break;
+          case "compaction":
+            calculation = calculateCompactionTest(formData);
+            break;
+          case "steel":
+            calculation = calculateSteelTest(formData);
+            break;
+          case "weld":
+            calculation = calculateWeldTest(formData);
+            break;
+          case "adhesion":
+            calculation = calculateAdhesionTest(formData);
+            break;
+          case "electrical":
+            calculation = calculateElectricalTest(formData);
+            break;
+          case "final":
+            calculation = calculateFinalInspectionTest(formData);
+            break;
+          case "corrosion":
+            calculation = calculateCorrosionTest(formData);
+            break;
+          default:
+            calculation = { result: "لا يوجد دالة حسابية محددة لهذا الاختبار.", recommendation: "" };
+        }
+        var resultDiv = form.parentElement.querySelector('.calc-result');
+        var resultText = resultDiv.querySelector('.result-text');
+        resultText.textContent = calculation.result;
+        var rec = resultDiv.querySelector('.result-recommendation');
+        rec.textContent = calculation.recommendation;
+        var canvas = resultDiv.querySelector('.result-chart');
+        updateChart(canvas, form.querySelectorAll('input'));
+        resultDiv.style.display = "block";
+      });
+    });
+    
+    document.getElementById('faqSearch').addEventListener('input', function() {
+      var filter = this.value.toLowerCase();
+      document.querySelectorAll('.faq-item').forEach(function(item) {
+        var text = item.textContent.toLowerCase();
+        item.style.display = text.indexOf(filter) > -1 ? "" : "none";
+      });
+    });
+    
+    document.getElementById('darkModeToggle').addEventListener('click', function() {
+      document.body.classList.toggle('dark-mode');
+      this.textContent = document.body.classList.contains('dark-mode') ? "الوضع الفاتح" : "الوضع الداكن";
+    });
+    
+    var backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', function() {
+      backToTop.style.display = (window.pageYOffset > 300) ? "block" : "none";
+    });
+    backToTop.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    
+    document.getElementById('downloadPDF').addEventListener('click', function() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.setFont('Cairo');
+      doc.setFontSize(18);
+      doc.text("دليل الفحوصات والاختبارات للمشاريع الإنشائية", 105, 20, { align: "center" });
+      doc.setFontSize(12);
+      doc.text("يرجى مراجعة المحتوى التفصيلي للحصول على كافة التعليمات والبيانات الفنية.", 105, 30, { align: "center" });
+      doc.save("دليل_الفحوصات_الإنشائية.pdf");
+    });
+  </script>
+</body>
+</html>
